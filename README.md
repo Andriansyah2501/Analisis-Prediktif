@@ -69,8 +69,6 @@ Dataset diunduh langsung dari GitHub dan ditampilkan untuk eksplorasi awal.
 
 ## 💻 Cara Menjalankan Notebook
 
-1. **Download file:**  
-   `real_telco_churn_prediction.ipynb`
 
 2. **Buka di Google Colab:**  
    [colab.research.google.com](https://colab.research.google.com/) dan upload notebook
