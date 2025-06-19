@@ -1,91 +1,85 @@
-# Laporan Proyek Machine Learning - Andrian Syah
+# Laporan Proyek Machine Learning - Telco Customer Churn Prediction
 
-📝 Laporan Proyek Machine Learning - Andrian Syah
-📌 Domain Proyek: Telekomunikasi
-Churn pelanggan merupakan tantangan utama dalam industri telekomunikasi. Churn berarti pelanggan berhenti menggunakan layanan dari suatu penyedia, yang menyebabkan perusahaan mengalami kerugian dari sisi pendapatan dan biaya akuisisi pelanggan baru. Oleh karena itu, penting bagi perusahaan untuk dapat memprediksi potensi churn dan melakukan tindakan preventif lebih dini.
+## 1. Domain Proyek
 
-Dengan menggunakan machine learning, kita bisa menganalisis pola dari pelanggan yang pernah berhenti berlangganan dan memprediksi kemungkinan pelanggan lain akan melakukan hal yang sama. Hal ini memungkinkan strategi retensi yang lebih efektif dan efisien.
+Industri telekomunikasi menghadapi tantangan besar dalam mempertahankan pelanggan di tengah persaingan yang ketat. Salah satu isu utama adalah **churn**, yaitu ketika pelanggan berhenti menggunakan layanan dari perusahaan. Hal ini berdampak langsung pada penurunan pendapatan dan meningkatkan biaya untuk mendapatkan pelanggan baru.
 
-🎯 Business Understanding
-Problem Statement:
-Bagaimana cara mengidentifikasi pelanggan yang kemungkinan besar akan melakukan churn?
+Dengan memanfaatkan machine learning, perusahaan dapat memprediksi pelanggan yang kemungkinan besar akan melakukan churn. Prediksi ini membantu perusahaan dalam menyusun strategi retensi dan peningkatan kepuasan pelanggan secara proaktif.
 
-Fitur apa yang paling berpengaruh terhadap keputusan pelanggan untuk berhenti?
+## 2. Business Understanding
 
-Goals:
-Mengembangkan model machine learning untuk memprediksi churn pelanggan.
+### 2.1 Problem Statements
+1. Bagaimana cara mengidentifikasi pelanggan yang kemungkinan besar akan melakukan churn?
+2. Fitur apa yang paling berpengaruh terhadap keputusan pelanggan untuk berhenti berlangganan?
 
-Mengidentifikasi fitur penting yang memengaruhi keputusan pelanggan dalam berhenti berlangganan.
+### 2.2 Goals
+1. Membangun model machine learning yang mampu memprediksi pelanggan yang akan melakukan churn.
+2. Mengidentifikasi fitur penting yang berpengaruh terhadap churn agar perusahaan dapat merancang strategi retensi yang efektif.
 
-Solution Statement:
-Menggunakan tiga algoritma machine learning: Logistic Regression, Random Forest, dan XGBoost.
+### 2.3 Solution Statements
+- Menerapkan algoritma klasifikasi: **Logistic Regression**, **Random Forest**, dan **XGBoost**.
+- Menangani ketidakseimbangan kelas dengan **SMOTE (Synthetic Minority Over-sampling Technique)**.
+- Melakukan evaluasi dengan metrik yang relevan seperti: **accuracy**, **precision**, **recall**, **F1-score**, dan **ROC-AUC**.
 
-Menangani ketidakseimbangan data dengan teknik SMOTE.
+## 3. Data Understanding
 
-Evaluasi model menggunakan metrik: accuracy, precision, recall, F1-score, dan ROC-AUC.
+Dataset yang digunakan adalah [Telco Customer Churn Dataset dari Kaggle](https://www.kaggle.com/blastchar/telco-customer-churn) yang terdiri dari 7.043 data pelanggan dengan 21 fitur, termasuk:
 
-📊 Data Understanding
-Dataset yang digunakan adalah Telco Customer Churn yang tersedia di Kaggle: https://www.kaggle.com/blastchar/telco-customer-churn
+- `gender`, `SeniorCitizen`, `Partner`, `Dependents`
+- `tenure`, `MonthlyCharges`, `TotalCharges`
+- `Contract`, `InternetService`, `PaymentMethod`
+- `Churn`: Label target (Yes/No)
 
-Dataset ini terdiri dari 7.043 entri pelanggan dengan informasi seperti:
+Hasil analisis awal menunjukkan bahwa pelanggan yang menggunakan kontrak jangka pendek, memiliki tagihan bulanan tinggi, dan tidak memiliki pasangan, lebih cenderung melakukan churn.
 
-gender, SeniorCitizen, Partner, Dependents
+## 4. Data Preparation
 
-tenure, MonthlyCharges, TotalCharges
+Langkah-langkah yang dilakukan:
+- Menghapus kolom `customerID` karena tidak memberikan informasi relevan.
+- Menghapus nilai kosong dan mengonversi `TotalCharges` menjadi numerik.
+- Mengubah data kategorikal menggunakan **LabelEncoder** dan **OneHotEncoder**.
+- Melakukan normalisasi terhadap data numerik menggunakan **StandardScaler**.
+- Membagi data menjadi data latih dan data uji (80:20).
+- Menyeimbangkan jumlah kelas menggunakan **SMOTE** karena jumlah pelanggan churn lebih sedikit.
 
-Contract, InternetService, PaymentMethod
+## 5. Modeling
 
-Target: Churn (Yes/No)
+Tiga model digunakan untuk melakukan prediksi churn:
 
-EDA menunjukkan bahwa pelanggan dengan kontrak jangka pendek, tagihan bulanan tinggi, dan tidak memiliki mitra cenderung lebih banyak melakukan churn.
+1. **Logistic Regression**
+   - Model baseline yang digunakan untuk klasifikasi biner.
 
-🧹 Data Preparation
-Menghapus kolom customerID yang tidak relevan.
+2. **Random Forest Classifier**
+   - Model ensemble berbasis pohon keputusan dengan teknik bootstrapping.
 
-Menangani nilai kosong (TotalCharges kosong di beberapa baris).
+3. **XGBoost Classifier**
+   - Model boosting yang unggul dalam menangani ketidakseimbangan data dan memberikan performa tinggi.
 
-Encoding fitur kategorikal dengan LabelEncoder dan OneHotEncoder.
+Semua model dilatih menggunakan data hasil preprocessing dan disesuaikan untuk memaksimalkan recall.
 
-Standardisasi fitur numerik menggunakan StandardScaler.
+## 6. Evaluation
 
-Menggunakan SMOTE untuk menyeimbangkan distribusi label Churn (karena dataset tidak seimbang).
+Evaluasi dilakukan menggunakan metrik:
+- **Accuracy**: Proporsi prediksi yang benar.
+- **Precision**: Proporsi pelanggan yang diprediksi churn dan benar-benar churn.
+- **Recall**: Proporsi churn yang berhasil dideteksi (sangat penting).
+- **F1-Score**: Harmonik dari precision dan recall.
+- **ROC-AUC**: Mengukur kemampuan model membedakan kelas churn dan tidak churn.
 
-Membagi dataset menjadi data latih dan data uji (80:20 split).
+Hasil evaluasi model:
 
-⚙️ Modeling
-Tiga model diterapkan:
+| Model               | Accuracy | Recall | F1-score | ROC AUC |
+|--------------------|----------|--------|----------|---------|
+| Logistic Regression| 80%      | 68%    | 72%      | 84%     |
+| Random Forest      | 84%      | 74%    | 77%      | 88%     |
+| XGBoost            | **86%**  | **77%**| **79%**  | **91%** |
 
-Logistic Regression - Model baseline
+Model **XGBoost** menghasilkan performa terbaik dan dipilih sebagai model final.
 
-Random Forest - Ensemble model dengan pembobotan acak
+## 7. Kesimpulan
 
-XGBoost - Model boosting yang kuat dan efisien
-
-Parameter default digunakan terlebih dahulu, lalu tuning dilakukan pada XGBoost untuk mencari kombinasi terbaik.
-
-✅ Evaluation
-Model dievaluasi dengan metrik:
-
-Accuracy: Seberapa banyak prediksi benar
-
-Recall: Seberapa banyak churn terdeteksi (penting untuk retensi)
-
-Precision dan F1-score: Untuk melihat keseimbangan antara TP dan FP
-
-ROC AUC: Kemampuan model dalam membedakan kelas
-
-Hasil evaluasi:
-
-Model	Accuracy	Recall	F1-score	ROC AUC
-Logistic Regression	80%	68%	72%	84%
-Random Forest	84%	74%	77%	88%
-XGBoost	86%	77%	79%	91%
-
-📌 Kesimpulan
-Model XGBoost memberikan performa terbaik dan dipilih sebagai model akhir. Model ini mampu memprediksi pelanggan yang akan churn dengan tingkat akurasi dan recall yang tinggi, yang sangat penting untuk membantu perusahaan melakukan tindakan retensi.
----
-
-## 📄 Lisensi
-
-Dataset ini bersifat open-source (IBM Sample Data). Kode dalam repositori ini bebas digunakan untuk keperluan edukasi dan non-komersial.
+- Model machine learning dapat secara efektif digunakan untuk memprediksi pelanggan yang kemungkinan besar akan melakukan churn.
+- Model **XGBoost** menunjukkan performa terbaik dan dipilih karena memiliki skor recall dan ROC-AUC tertinggi.
+- Fitur-fitur seperti `tenure`, `MonthlyCharges`, dan `Contract` terbukti sangat memengaruhi keputusan churn pelanggan.
+- Dengan informasi ini, perusahaan dapat menargetkan pelanggan berisiko tinggi dengan promosi atau penawaran khusus untuk meningkatkan loyalitas dan retensi.
 
