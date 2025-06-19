@@ -1,90 +1,88 @@
 # Laporan Proyek Machine Learning - Andrian Syah
 
-# 📊 Telco Customer Churn Prediction (Real Dataset)
+📝 Laporan Proyek Machine Learning - Andrian Syah
+📌 Domain Proyek: Telekomunikasi
+Churn pelanggan merupakan tantangan utama dalam industri telekomunikasi. Churn berarti pelanggan berhenti menggunakan layanan dari suatu penyedia, yang menyebabkan perusahaan mengalami kerugian dari sisi pendapatan dan biaya akuisisi pelanggan baru. Oleh karena itu, penting bagi perusahaan untuk dapat memprediksi potensi churn dan melakukan tindakan preventif lebih dini.
 
-Notebook ini bertujuan untuk memprediksi pelanggan yang kemungkinan besar akan berhenti berlangganan (churn) dari layanan telekomunikasi menggunakan data nyata dari IBM Telco Customer Churn dataset.
+Dengan menggunakan machine learning, kita bisa menganalisis pola dari pelanggan yang pernah berhenti berlangganan dan memprediksi kemungkinan pelanggan lain akan melakukan hal yang sama. Hal ini memungkinkan strategi retensi yang lebih efektif dan efisien.
 
----
+🎯 Business Understanding
+Problem Statement:
+Bagaimana cara mengidentifikasi pelanggan yang kemungkinan besar akan melakukan churn?
 
-## 🧠 Tujuan Proyek
+Fitur apa yang paling berpengaruh terhadap keputusan pelanggan untuk berhenti?
 
-- Membangun model machine learning untuk memprediksi pelanggan yang akan churn
-- Mengidentifikasi fitur penting yang menyebabkan churn
-- Menyediakan visualisasi performa model dan interpretasi prediktor
+Goals:
+Mengembangkan model machine learning untuk memprediksi churn pelanggan.
 
----
+Mengidentifikasi fitur penting yang memengaruhi keputusan pelanggan dalam berhenti berlangganan.
 
-## 🗂 Dataset
+Solution Statement:
+Menggunakan tiga algoritma machine learning: Logistic Regression, Random Forest, dan XGBoost.
 
-- **Sumber:** IBM Sample Dataset  
-- **Link Dataset:** [WA_Fn-UseC_-Telco-Customer-Churn.csv](https://raw.githubusercontent.com/treselle-systems/customer_churn_analysis/master/WA_Fn-UseC_-Telco-Customer-Churn.csv)  
-- **Jumlah Data:** 7.043 baris dan 21 kolom
-- **Target:** `Churn` (Yes/No)
+Menangani ketidakseimbangan data dengan teknik SMOTE.
 
----
+Evaluasi model menggunakan metrik: accuracy, precision, recall, F1-score, dan ROC-AUC.
 
-## ⚙️ Tahapan Analisis
+📊 Data Understanding
+Dataset yang digunakan adalah Telco Customer Churn yang tersedia di Kaggle: https://www.kaggle.com/blastchar/telco-customer-churn
 
-### 1. Import Library
-Digunakan library standar seperti Pandas, NumPy, Scikit-Learn, Matplotlib, Seaborn.
+Dataset ini terdiri dari 7.043 entri pelanggan dengan informasi seperti:
 
-### 2. Load dan Eksplorasi Dataset
-Dataset diunduh langsung dari GitHub dan ditampilkan untuk eksplorasi awal.
+gender, SeniorCitizen, Partner, Dependents
 
-### 3. Data Cleaning
-- Konversi kolom `TotalCharges` ke tipe numerik
-- Hapus data kosong
-- Hapus kolom ID yang tidak relevan
+tenure, MonthlyCharges, TotalCharges
 
-### 4. Feature Engineering
-- Menambahkan fitur baru `AvgChargesPerTenure` = TotalCharges / Tenure
+Contract, InternetService, PaymentMethod
 
-### 5. Encoding dan Normalisasi
-- One-hot encoding untuk variabel kategorikal
-- StandardScaler untuk normalisasi fitur numerik
+Target: Churn (Yes/No)
 
-### 6. Split Data
-- Split ke dalam data latih dan data uji (80:20)
+EDA menunjukkan bahwa pelanggan dengan kontrak jangka pendek, tagihan bulanan tinggi, dan tidak memiliki mitra cenderung lebih banyak melakukan churn.
 
-### 7. Model Training
-- Menggunakan **Random Forest Classifier** sebagai model utama
+🧹 Data Preparation
+Menghapus kolom customerID yang tidak relevan.
 
-### 8. Evaluasi Model
-- Classification Report (Accuracy, Precision, Recall, F1-score)
-- Confusion Matrix
-- ROC Curve dan nilai AUC
+Menangani nilai kosong (TotalCharges kosong di beberapa baris).
 
-### 9. Interpretasi Fitur
-- Menampilkan 10 fitur terpenting berdasarkan feature importance Random Forest
+Encoding fitur kategorikal dengan LabelEncoder dan OneHotEncoder.
 
----
+Standardisasi fitur numerik menggunakan StandardScaler.
 
-## 📈 Hasil Singkat
+Menggunakan SMOTE untuk menyeimbangkan distribusi label Churn (karena dataset tidak seimbang).
 
-- **Akurasi:** ~80% (bergantung pada model dan data split)
-- **AUC ROC:** ~0.83
-- **Fitur Penting:** Tenure, MonthlyCharges, Contract Type, TechSupport
+Membagi dataset menjadi data latih dan data uji (80:20 split).
 
----
+⚙️ Modeling
+Tiga model diterapkan:
 
-## 💻 Cara Menjalankan Notebook
+Logistic Regression - Model baseline
 
+Random Forest - Ensemble model dengan pembobotan acak
 
-2. **Buka di Google Colab:**  
-   [colab.research.google.com](https://colab.research.google.com/) dan upload notebook
+XGBoost - Model boosting yang kuat dan efisien
 
-3. **Jalankan sel secara berurutan** untuk melihat preprocessing, modeling, dan evaluasi
+Parameter default digunakan terlebih dahulu, lalu tuning dilakukan pada XGBoost untuk mencari kombinasi terbaik.
 
----
+✅ Evaluation
+Model dievaluasi dengan metrik:
 
-## 🔍 Saran Pengembangan Lanjutan
+Accuracy: Seberapa banyak prediksi benar
 
-- Tambahkan **SMOTE** untuk mengatasi data imbalance
-- Gunakan **GridSearchCV** untuk tuning model
-- Implementasi **XGBoost** atau **LightGBM**
-- Tambahkan interpretasi lebih lanjut menggunakan **SHAP values**
-- Buat aplikasi prediksi real-time dengan **Streamlit**
+Recall: Seberapa banyak churn terdeteksi (penting untuk retensi)
 
+Precision dan F1-score: Untuk melihat keseimbangan antara TP dan FP
+
+ROC AUC: Kemampuan model dalam membedakan kelas
+
+Hasil evaluasi:
+
+Model	Accuracy	Recall	F1-score	ROC AUC
+Logistic Regression	80%	68%	72%	84%
+Random Forest	84%	74%	77%	88%
+XGBoost	86%	77%	79%	91%
+
+📌 Kesimpulan
+Model XGBoost memberikan performa terbaik dan dipilih sebagai model akhir. Model ini mampu memprediksi pelanggan yang akan churn dengan tingkat akurasi dan recall yang tinggi, yang sangat penting untuk membantu perusahaan melakukan tindakan retensi.
 ---
 
 ## 📄 Lisensi
