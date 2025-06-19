@@ -1,4 +1,4 @@
-# Laporan Proyek Machine Learning - Telco Customer Churn Prediction
+# Laporan Proyek Machine Learning Terapan - Andrian Syah
 
 ## 1. Domain Proyek
 
